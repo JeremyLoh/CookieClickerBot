@@ -9,8 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 import static java.lang.Long.parseLong;
 
 public class HomePage {
-    private static final String PAGE_URL = "https://orteil.dashnet.org/cookieclicker/";
-
     private final WebDriver driver;
 
     @FindBy(how = How.ID, using = "cookies")
@@ -21,7 +19,6 @@ public class HomePage {
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
-        this.driver.get(PAGE_URL);
         PageFactory.initElements(this.driver, this);
     }
 
