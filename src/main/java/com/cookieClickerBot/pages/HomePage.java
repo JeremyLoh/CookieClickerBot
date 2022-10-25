@@ -5,8 +5,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 import static java.lang.Long.parseLong;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class HomePage {
     private final WebDriver driver;
@@ -23,6 +27,8 @@ public class HomePage {
     }
 
     public boolean isPageOpened() {
+        new WebDriverWait(driver, Duration.ofSeconds(30))
+                .until(visibilityOf(cookieCountElement));
         return cookieCountElement.getText().contains("cookies");
     }
 
