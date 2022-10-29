@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static java.lang.Double.parseDouble;
 import static java.lang.Long.parseLong;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
@@ -39,6 +40,11 @@ public class HomePage {
     public long getCurrentCookieCount() {
         String cookieCountElementText = cookieCountElement.getText();
         return parseLong(cookieCountElementText.split(" ")[0]);
+    }
+
+    public double getCookiesPerSecond() {
+        String cookieCountElementText = cookieCountElement.getText();
+        return parseDouble(cookieCountElementText.split("per second: ")[1]);
     }
 
     public void clickCookie() {
