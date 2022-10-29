@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
@@ -33,13 +34,12 @@ public class UpgradePage {
 
     public void clickMostExpensiveUpgrade(long availableCookies) {
         enabledUpgrades.forEach(UpgradePage::waitForElement);
-        enabledUpgrades.stream()
+        WebElement upgrade = enabledUpgrades.stream()
                 .map(UpgradePage::getContent)
-                .filter((WebElement upgrade) -> availableCookies >= getPrice(upgrade))
-                .sorted(Comparator.comparingLong(UpgradePage::getPrice).reversed())
-                .limit(1)
-                .forEach((WebElement upgrade) -> ((JavascriptExecutor) driver)
-                        .executeScript("arguments[0].click()", upgrade));
+                .filter((WebElement contentElement) -> availableCookies >= getPrice(contentElement))
+                .max(Comparator.comparingLong(UpgradePage::getPrice))
+                .orElseThrow(NoSuchElementException::new);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click()", upgrade);
     }
 
     private static WebElement getContent(WebElement upgrade) {
