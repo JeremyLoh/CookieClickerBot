@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CookieClickerGameTest {
@@ -24,6 +25,7 @@ public class CookieClickerGameTest {
     @BeforeEach
     void setup() {
         driver = new FirefoxDriver();
+        setupGame();
     }
 
     @AfterEach
@@ -32,11 +34,16 @@ public class CookieClickerGameTest {
         driver.close();
     }
 
-    @Test
-    void loadGameHomePage() {
+    private static void setupGame() {
         LanguageSelectHomePage languageSelectHomePage = new LanguageSelectHomePage(driver);
         languageSelectHomePage.setGameLanguage();
+    }
+
+    @Test
+    void clickCookieOnce() {
         HomePage homePage = new HomePage(driver);
-        assertTrue(homePage.isPageOpened());
+        assertEquals(0, homePage.getCurrentCookieCount());
+        homePage.clickCookie();
+        assertEquals(1, homePage.getCurrentCookieCount());
     }
 }
