@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 import static java.lang.Long.parseLong;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class HomePage {
@@ -24,12 +25,15 @@ public class HomePage {
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
+        waitForElement(cookieElement);
+        waitForElement(cookieCountElement);
     }
 
-    public boolean isPageOpened() {
+    private void waitForElement(WebElement element) {
         new WebDriverWait(driver, Duration.ofSeconds(30))
-                .until(visibilityOf(cookieCountElement));
-        return cookieCountElement.getText().contains("cookies");
+                .until(visibilityOf(element));
+        new WebDriverWait(driver, Duration.ofSeconds(30))
+                .until(elementToBeClickable(element));
     }
 
     public long getCurrentCookieCount() {

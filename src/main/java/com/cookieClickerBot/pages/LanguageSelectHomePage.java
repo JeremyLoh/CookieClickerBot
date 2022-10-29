@@ -22,11 +22,11 @@ public class LanguageSelectHomePage {
         this.driver = driver;
         this.driver.get(PAGE_URL);
         PageFactory.initElements(this.driver, this);
+        new WebDriverWait(driver, Duration.ofSeconds(30))
+                .until(visibilityOf(englishLanguageSelectElement));
     }
 
     public void setGameLanguage() {
-        new WebDriverWait(driver, Duration.ofSeconds(30))
-                .until(visibilityOf(englishLanguageSelectElement));
         englishLanguageSelectElement.click();
     }
 }
