@@ -22,11 +22,15 @@ public class OptionPage {
     @FindBy(how = How.LINK_TEXT, using = "Export save")
     private WebElement exportSaveToText;
 
+    @FindBy(how = How.LINK_TEXT, using = "Import save")
+    private WebElement importSaveFromText;
+
     public OptionPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
         waitForElement(closeMenuButton);
         waitForElement(exportSaveToText);
+        waitForElement(importSaveFromText);
     }
 
     private void waitForElement(WebElement element) {
@@ -41,6 +45,15 @@ public class OptionPage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         WebElement saveTextArea = wait.until((driver) -> driver.findElement(By.cssSelector("#promptContent textarea")));
         return saveTextArea.getText();
+    }
+
+    public void importTextSave(String saveText) {
+        importSaveFromText.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        WebElement importSaveTextArea = wait.until((driver) -> driver.findElement(By.cssSelector("#promptContent textarea")));
+        importSaveTextArea.sendKeys(saveText);
+        WebElement loadSaveButton = wait.until((driver) -> driver.findElement(By.linkText("Load")));
+        loadSaveButton.click();
     }
 
     public void closeOptionsMenu() {

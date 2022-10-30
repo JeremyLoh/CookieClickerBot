@@ -82,4 +82,15 @@ public class CookieClickerGameTest {
         String saveText = optionPage.exportTextSave();
         assertEquals(TEN_COOKIE_SAVE_TEXT, saveText);
     }
+
+    @Test
+    void importSaveFromText() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        HomePage homePage = new HomePage(driver);
+        wait.until((driver) -> homePage.getCurrentCookieCount() == 0);
+        homePage.openOptionsMenu();
+        OptionPage optionPage = new OptionPage(driver);
+        optionPage.importTextSave(TEN_COOKIE_SAVE_TEXT);
+        wait.until((driver) -> homePage.getCurrentCookieCount() == 10);
+    }
 }
