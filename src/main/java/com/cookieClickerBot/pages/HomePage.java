@@ -1,5 +1,6 @@
 package com.cookieClickerBot.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,11 +24,15 @@ public class HomePage {
     @FindBy(how = How.ID, using = "bigCookie")
     private WebElement cookieElement;
 
+    @FindBy(how = How.CSS, using = "#prefsButton .subButton")
+    private WebElement optionsMenuButton;
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
         waitForElement(cookieElement);
         waitForElement(cookieCountElement);
+        waitForElement(optionsMenuButton);
     }
 
     private void waitForElement(WebElement element) {
@@ -49,5 +54,9 @@ public class HomePage {
 
     public void clickCookie() {
         cookieElement.click();
+    }
+
+    public void openOptionsMenu() {
+        optionsMenuButton.click();
     }
 }
